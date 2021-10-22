@@ -6,7 +6,7 @@ from torch import nn
 def StatisticPooling(feats):
     assert feats.dim() == 3 # (batch, time, dim)
     mean = feats.mean(1)
-    variance = torch.mul(feats, feats).sum(1) - torch.mul(feats,feats)/frames.size(1)
+    variance = torch.mul(feats, feats).sum(1) - torch.mul(mean,mean)/frames.size(1)
     return torch.cat((mean,variance),dim=-1).unsqueeze(1)  # (batch, 1, dim)
 
 class InputAwareSelfAttention(nn.Module):
